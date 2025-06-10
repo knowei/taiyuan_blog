@@ -4,16 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ruoyi</groupId>
+    <groupId>com.knowei</groupId>
     <artifactId>taiyuan</artifactId>
-    <version>3.9.0</version>
+    <version>0.0.1</version>
 
-    <name>ruoyi</name>
+    <name>taiyuan</name>
     <url>http://www.ruoyi.vip</url>
     <description>若依管理系统</description>
 
     <properties>
-        <ruoyi.version>3.9.0</ruoyi.version>
+        <knowei.version>0.0.1</knowei.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -185,37 +185,37 @@
 
             <!-- 定时任务-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.knowei</groupId>
                 <artifactId>taiyuan-quartz</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${knowei.version}</version>
             </dependency>
 
             <!-- 代码生成-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.knowei</groupId>
                 <artifactId>taiyuan-generator</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${knowei.version}</version>
             </dependency>
 
             <!-- 核心模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.knowei</groupId>
                 <artifactId>taiyuan-framework</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${knowei.version}</version>
             </dependency>
 
             <!-- 系统模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.knowei</groupId>
                 <artifactId>taiyuan-system</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${knowei.version}</version>
             </dependency>
 
             <!-- 通用工具-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.knowei</groupId>
                 <artifactId>taiyuan-common</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${knowei.version}</version>
             </dependency>
 
         </dependencies>
