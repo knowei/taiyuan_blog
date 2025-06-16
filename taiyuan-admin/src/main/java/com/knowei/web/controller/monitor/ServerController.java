@@ -1,7 +1,7 @@
 package com.knowei.web.controller.monitor;
 
 import com.knowei.common.core.domain.AjaxResult;
-import com.knowei.framework.web.domain.Server;
+import com.knowei.framework.web.system.domain.Server;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -6,7 +6,7 @@ import com.knowei.common.core.domain.AjaxResult;
 import com.knowei.common.core.page.TableDataInfo;
 import com.knowei.common.enums.BusinessType;
 import com.knowei.common.utils.poi.ExcelUtil;
-import com.knowei.framework.web.service.SysPasswordService;
+import com.knowei.framework.web.system.service.SysPasswordService;
 import com.knowei.system.domain.SysLogininfor;
 import com.knowei.system.service.ISysLogininforService;
 import org.springframework.beans.factory.annotation.Autowired;

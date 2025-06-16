@@ -4,7 +4,7 @@ import com.knowei.common.core.controller.BaseController;
 import com.knowei.common.core.domain.AjaxResult;
 import com.knowei.common.core.domain.model.RegisterBody;
 import com.knowei.common.utils.StringUtils;
-import com.knowei.framework.web.service.SysRegisterService;
+import com.knowei.framework.web.system.service.SysRegisterService;
 import com.knowei.system.service.ISysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

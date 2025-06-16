@@ -9,7 +9,7 @@ import com.knowei.common.utils.ServletUtils;
 import com.knowei.common.utils.StringUtils;
 import com.knowei.framework.manager.AsyncManager;
 import com.knowei.framework.manager.factory.AsyncFactory;
-import com.knowei.framework.web.service.TokenService;
+import com.knowei.framework.web.system.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;

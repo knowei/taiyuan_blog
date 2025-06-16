@@ -4,6 +4,7 @@ import com.knowei.common.config.RuoYiConfig;
 import com.knowei.common.constant.Constants;
 import com.knowei.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
@@ -26,6 +27,9 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
+    @Value("${whitelist}")
+    private String whitelist;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /** 本地文件上传路径 */
@@ -43,7 +47,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(repeatSubmitInterceptor).excludePathPatterns(whitelist).addPathPatterns("/**");
     }
 
     /**

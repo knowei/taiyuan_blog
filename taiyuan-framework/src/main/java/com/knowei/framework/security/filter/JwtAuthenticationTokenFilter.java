@@ -3,7 +3,7 @@ package com.knowei.framework.security.filter;
 import com.knowei.common.core.domain.model.LoginUser;
 import com.knowei.common.utils.SecurityUtils;
 import com.knowei.common.utils.StringUtils;
-import com.knowei.framework.web.service.TokenService;
+import com.knowei.framework.web.system.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

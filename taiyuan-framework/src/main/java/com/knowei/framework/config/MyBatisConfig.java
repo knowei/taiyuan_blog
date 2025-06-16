@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -30,7 +29,7 @@ import java.util.List;
  *
  * @author ruoyi
  */
-@Configuration
+//@Configuration
 public class MyBatisConfig {
     @Autowired
     private Environment env;

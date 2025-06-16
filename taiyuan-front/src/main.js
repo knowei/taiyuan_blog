@@ -2,6 +2,12 @@ import Vue from 'vue'
 
 import Cookies from 'js-cookie'
 
+import VueMarkdownEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+import Prism from 'prismjs';
+
 import Element from 'element-ui'
 import './assets/styles/element-variables.scss'
 
@@ -73,11 +79,17 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })
 
+Vue.use(VueMarkdownEditor)
+
+VueMarkdownEditor.use(vuepressTheme, {
+  Prism,
+});
+
 Vue.config.productionTip = false
 
 new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
 })
