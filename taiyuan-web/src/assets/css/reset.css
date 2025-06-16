@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: "Poppins"; */
+}
+
+@font-face {
+    font-family: 'MYTTF';
+    /* src: url(../ttf/三极萌萌简体.ttf); */
+    src: url(../ttf/三极萌萌简体.woff2) format("woff2");
+    src: url(../ttf/三极萌萌简体.woff) format("woff");
+
+
+}
+
+body {
+    /* 默认最小高度 2屏 */
+    min-height: 100vh;
+    background-color: rgb(255, 255, 255);
+}
+
+/* // 美化滚动条 */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    width: 6px;
+    background: rgba(#121313, 0.1);
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(35, 190, 232, 0.5);
+    background-clip: padding-box;
+    min-height: 28px;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+    transition: background-color .3s;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(6, 104, 174, 0.502);
+    transition: all 0.8s ease !important;
+}

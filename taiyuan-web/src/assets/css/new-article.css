@@ -1,0 +1,217 @@
+#knowei-mark {
+    font-family: 'MYTTF';
+    font-size: 25px;
+    font-weight: 400;
+    /* max-width: 80%; */
+    margin: 0 auto;
+    word-break: normal;
+    word-wrap: break-word;
+}
+
+#knowei-mark h1,
+#knowei-mark h2,
+#knowei-mark h3,
+#knowei-mark h4,
+#knowei-mark h5,
+#knowei-mark h6 {
+    margin: 10px 0 10px 0;
+    color: #211c1c;
+    line-height: 150%;
+}
+
+#knowei-mark h1 {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+#knowei-mark h2 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+#knowei-mark h3 {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+#knowei-mark h4 {
+    font-size: 24px
+}
+
+#knowei-mark h5 {
+    font-size: 20px;
+}
+
+#knowei-mark p {
+    /* background-color: #e83e8c; */
+    margin: 0 0 20px 0;
+    line-height: 30px;
+}
+
+#knowei-mark p img {
+    max-width: 100%;
+    margin: auto;
+    align-items: center;
+}
+
+#knowei-mark p code {
+    color: #e83e8c;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#knowei-mark pre {
+    background-color: #f5f5f5;
+    padding: 20px;
+    white-space: pre-wrap;
+    word-break: break-all
+}
+
+#knowei-mark ol,
+#knowei-mark ul {
+    padding-left: 36px;
+    padding-right: 36px;
+    margin: 40px auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+#knowei-mark ol ol,
+#knowei-mark ol ul,
+#knowei-mark ul ol,
+#knowei-mark ul ul {
+    border-left: none
+}
+
+#knowei-mark ul {
+    list-style-type: disc
+}
+
+#knowei-mark ol {
+    list-style-type: decimal
+}
+
+#knowei-mark ol li,
+#knowei-mark ul li {
+    margin: 10px 0;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 31px;
+    color: #4c4e4d
+}
+
+/* #knowei-mark blockquote{
+    color: white;
+    background-color: #000000;
+    border-left: 5px solid rgb(9, 167, 224);
+    padding-bottom: 5px;
+}
+
+#knowei-mark blockquote p{
+    margin-left: 10px;
+}
+#knowei-mark blockquote blockquote{
+    margin-left: 10px;
+} */
+
+#knowei-mark blockquote {
+    background: rgb(255, 255, 255);
+    position: relative;
+    display: block;
+    margin: 37px auto;
+    border-left: 2px solid #1ad3fd;
+    font-style: normal;
+    text-align: left;
+    /* color:#8e8787; */
+    line-height: 160%;
+    padding: 2px 12px;
+    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 9%), 0 1px 3px 0 rgb(93 100 148 / 6%) !important;
+}
+
+
+#knowei-mark a {
+    text-decoration: none;
+    color: #5c8ec6;
+}
+
+#knowei-mark pre {
+    position: relative;
+    background: #21252b;
+    border-radius: 5px;
+    line-height: 1.6;
+    /* margin-bottom: 1.6em; */
+    max-width: 100%;
+    overflow: auto;
+    text-shadow: none;
+    color: rgb(255, 255, 255);
+    padding-top: 30px;
+    box-shadow: 0 10px 30px 0px rgb(0 0 0 / 40%);
+}
+
+#knowei-mark pre::before {
+    content: " ";
+    position: absolute;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #fc625d;
+    width: 12px;
+    height: 12px;
+    left: 12px;
+    margin-top: -18px;
+    -webkit-box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+    box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+    z-index: 2;
+}
+
+
+#knowei-mark pre code {
+    font-family: "MYTTF";
+    display: block;
+    overflow-x: auto;
+    padding: .5em;
+    color: #abb2bf;
+    background: #1d1f21;
+    border-radius: 10px;
+}
+
+#knowei-mark table {
+    border: 1px solid #e5e5e5;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#knowei-mark table tr {
+    background-color: #fff
+}
+
+#knowei-mark table tr:hover > td {
+    background-color: #f5f5f5;
+    background-clip: padding-box
+}
+
+#knowei-mark table td,
+#knowei-mark table th {
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    -webkit-transition: background-color .25s ease;
+    transition: background-color .25s ease;
+    height: 40px;
+    min-width: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    position: relative;
+    margin: 0;
+    padding: 0 18px
+}
+
+#knowei-mark table th {
+    background-color: #f5f5f5
+}
+
+#knowei-mark em,
+#knowei-mark i {
+    color: #14a4e8;
+}

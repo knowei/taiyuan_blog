@@ -5,6 +5,7 @@ import com.knowei.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.knowei.framework.security.handle.AuthenticationEntryPointImpl;
 import com.knowei.framework.security.handle.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.filter.CorsFilter;
+
+import java.util.List;
 
 /**
  * spring security配置
@@ -65,6 +68,9 @@ public class SecurityConfig {
     @Autowired
     private PermitAllUrlProperties permitAllUrl;
 
+    @Value("${whitelist}")
+    private List<String> whiteList;
+
     /**
      * 身份验证实现
      */
@@ -106,6 +112,7 @@ public class SecurityConfig {
                     .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**")
                     .permitAll()
                     .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**")
+                    .permitAll().antMatchers("/portal/**")
                     .permitAll()
                     // 除上面外的所有请求全部需要鉴权认证
                     .anyRequest().authenticated();

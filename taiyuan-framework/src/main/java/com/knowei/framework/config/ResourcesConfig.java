@@ -1,5 +1,6 @@
 package com.knowei.framework.config;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.knowei.common.config.RuoYiConfig;
 import com.knowei.common.constant.Constants;
 import com.knowei.framework.interceptor.RepeatSubmitInterceptor;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,7 +31,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
     @Value("${whitelist}")
-    private String whitelist;
+    private List<String> whiteList;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -47,7 +50,8 @@ public class ResourcesConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(repeatSubmitInterceptor).excludePathPatterns(whitelist).addPathPatterns("/**");
+
+        registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**").excludePathPatterns(whiteList);
     }
 
     /**
