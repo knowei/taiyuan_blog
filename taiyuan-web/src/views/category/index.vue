@@ -144,7 +144,6 @@ span {
   border-radius: 50%;
   box-shadow: 0.4px 0.4px 0.4px 0px #fff;
 }
-
 svg {
   height: 20px;
   width: 20px;

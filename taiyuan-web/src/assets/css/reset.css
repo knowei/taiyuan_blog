@@ -18,6 +18,7 @@ body {
     /* 默认最小高度 2屏 */
     min-height: 100vh;
     background-color: rgb(255, 255, 255);
+    font-family: 'MYTTF';
 }
 
 /* // 美化滚动条 */

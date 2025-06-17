@@ -12,6 +12,7 @@
     </div>
 
 
+
     <div class="archive-content">
       <div class="article-sort" v-for="(item, index) in archive" :key="index">
         <div class="article-sort-item year"><span>{{ item.year }}</span></div>
@@ -30,7 +31,6 @@
 
 <script>
 import {archive} from "@/api/archive"
-
 export default {
   meta: {
     index: 4
@@ -149,9 +149,8 @@ export default {
 
       font-size: 17px;
       font-weight: 500;
-
+      
     }
-
     transition: all 0.7s ease-in-out;
   }
 

@@ -5,31 +5,31 @@ const isProduction = process.env.NODE_ENV === "production";
 
 
 module.exports = defineConfig({
-    transpileDependencies: true,
-    productionSourceMap: false, //打包不生成map
-    devServer: {
-        port: 8088,
-        proxy: {
-            "/api": {
-                target: "http://localhost:8080/",
-                changeOrigin: true,
-                pathRewrite: {
-                    "^/api": "",
-                },
-            },
+  transpileDependencies: true,
+  productionSourceMap: false, //打包不生成map
+  devServer: {
+    port: 8088,
+    proxy: {
+      "/api": {
+        target: "http://localhost:8080/",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": "",
         },
+      },
     },
-    configureWebpack: (config) => {
-        if (isProduction) {
-            // 开启gzip压缩
-            config.plugins.push(
-                new CompressionWebpackPlugin({
-                    algorithm: "gzip",
-                    test: /\.js$|\.html$|\.json$|\.css/,
-                    threshold: 10240,
-                    minRatio: 0.8,
-                })
-            );
-        }
-    },
+  },
+  configureWebpack: (config) => {
+    if (isProduction) {
+      // 开启gzip压缩
+      config.plugins.push(
+          new CompressionWebpackPlugin({
+            algorithm: "gzip",
+            test: /\.js$|\.html$|\.json$|\.css/,
+            threshold: 10240,
+            minRatio: 0.8,
+          })
+      );
+    }
+  },
 })

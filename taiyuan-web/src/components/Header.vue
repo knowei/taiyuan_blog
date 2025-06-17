@@ -64,7 +64,6 @@ import "@/assets/js/header"
 import $ from "jquery"
 import {getAllTag} from "@/api/tag"
 import {getAllCategory} from '@/api/category';
-
 export default {
   data() {
     return {

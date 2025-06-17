@@ -37,8 +37,8 @@
         </div>
         <div class="commit">
           <div class="commit-info">
-            <input type="text" v-model="QQinputData" placeholder="QQ(必填)">
-            <input type="text" placeholder="email(选填)">
+            <input type="text" v-model="commentParams.nickName" placeholder="昵称">
+            <input type="text" v-model="commentParams.email" placeholder="email(选填)">
             <input type="text" placeholder="https(选填)">
           </div>
           <div class="commit-canti">
@@ -57,32 +57,32 @@
             </div>
             <!-- <div class="friend-title"> -->
             <div class="friend-info">
-              <div class="friend-nickname">{{ item.commentUsername }}
+              <div class="friend-nickname">{{ item.nickName }}
                 <svg class="icon" aria-hidden="true">
                   <use
-                      :xlink:href="item.commentUsername == 'K-No-Wei' ? '#icon-ic_userlevel_5': '#icon-ic_userlevel_4'">
+                      :xlink:href="item.nickName == 'K-No-Wei' ? '#icon-ic_userlevel_5': '#icon-ic_userlevel_4'">
                   </use>
                 </svg>
                 <span style="cursor: pointer;color:#1a416b;font-weight: 600;"
-                      @click="showDetails(item._id, index)">回复</span></div>
-              <div class="friend-time">{{ item.ctime }}</div>
+                      @click="showDetails(item.id, index)">回复</span></div>
+              <div class="friend-time">{{ item.createTime }}</div>
               <!-- 评论内容 -->
               <div class="friend-msg">{{ item.content }}</div>
               <!-- 子评论 -->
               <div>
-                <div v-for="(it,ind) in item.childrens" :key="ind">
+                <div v-for="(it,ind) in item.children" :key="ind">
                   <div>
                     <img :src="it.authorImg" alt="">
                   </div>
                   <!-- <div class="friend-title"> -->
                   <div class="friend-child">
-                    <div class="friend-nickname">{{ it.commentUsername }}
+                    <div class="friend-nickname">{{ it.nickName }}
                       <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-ic_userlevel_5"></use>
                       </svg>
                       <span style="cursor: pointer;"></span></div>
 
-                    <div class="friend-time">{{ it.ctime }}</div>
+                    <div class="friend-time">{{ it.createTime }}</div>
                     <!-- 评论内容 -->
                     <div class="friend-msg" style="border: 0;!important">{{ it.content }}</div>
                   </div>
@@ -108,7 +108,6 @@ import {Comment, GetComment, GetAv} from "@/api/comment"
 import {marked} from 'marked'
 import Loading from '@/components/loading/loading.vue';
 import "@/assets/js/listLoading"
-
 export default {
   meta: {
     index: 7
@@ -131,6 +130,7 @@ export default {
       timer: 0,
       article: {
         coverImage: '',
+        createTime: ''
       },
       content: '',
       QQ: '',
@@ -144,9 +144,9 @@ export default {
         content: '',
         articleId: '',
         parentId: '',
-        authorImg: ''
+        nickName: '',
       },
-      articleComment: ''
+      articleComment: []
     }
   },
   methods: {
@@ -166,20 +166,6 @@ export default {
         }, 10);
       }
     },
-    msg(value) {
-      var QQtest = /^[1-9][0-9]{4,10}$/
-      if (!QQtest.test(value)) {
-        message.run("QQ格式错误", "error")
-        // this.QQstatus = false
-      } else {
-        this.QQstatus = true
-        GetAv(value).then(res => {
-          this.commentParams.commentUsername = res.data.data.name
-          this.commentParams.authorImg = res.data.data.avatar
-          this.QQinputData = res.data.data.name
-        })
-      }
-    },
     // 根据id获取文章详情
     getArticle() {
       let id = this.$route.params.id
@@ -187,59 +173,31 @@ export default {
         this.article = res;
         // md格式渲染在页面
         this.content = marked(res.content)
-        console.log(marked(res.content))
       })
     },
     submitInfo() {
-
-      if (this.QQstatus == false)
-        return;
-      this.commentParams.articleId = this.$route.params.id
-      console.log(this.commentParams)
+      this.commentParams.postId = this.$route.params.id
       Comment(this.commentParams).then(res => {
-        if (res.data.code === 200) {
-          message.run("评论成功", "success")
-          this.commentParams.parentId = ''
-          this.commentParams.content = ''
-          this.QQ = ''
-          this.getAllComment()
-        }
+        console.log(res)
+        message.run("评论成功", "success")
+        this.getAllComment()
       })
     },
     getAllComment() {
       let id = this.$route.params.id
       GetComment(id).then(res => {
-        if (res.data.code === 200) {
-          this.articleComment = res.data.data
-          console.log(this.articleComment)
-        }
+        this.articleComment = res
+        console.log(this.articleComment)
       })
     },
     showDetails(id, textid) {
-      var el = document.getElementsByClassName("comment-submit")[0]
+      var el = document.getElementsByClassName("comment-title")[0]
       this.$nextTick(function () {
         window.scrollTo({"behavior": "smooth", "top": el.offsetTop - 100});
       })
       this.commentParams.parentId = id
-      this.commentParams.content = '@' + this.articleComment[textid].commentUsername + "    "
-    }
-  },
-  //监听数据变换
-  watch: {
-    QQinputData(value) {
-      if (this.timer === 0) {
-        this.timer = setTimeout(() => {
-          //  this.GetValue()
-          this.msg(value)
-        }, 1000)
-      } else {
-        clearTimeout(this.timer)
-        this.timer = setTimeout(() => {
-          //  this.GetValue()
-          this.msg(value)
-        }, 1000)
-      }
-
+      this.commentParams.content = '@' + this.articleComment[textid].nickName + " "
+      console.log(this.commentParams)
     }
   },
   created() {
@@ -454,6 +412,7 @@ export default {
         textarea {
           border: 0px;
           outline: none;
+          resize: none;
         }
 
       }
@@ -463,16 +422,29 @@ export default {
         text-align: right;
 
         span {
-          padding: 5px 15px;
-          border: 1px solid rgb(51, 51, 51);
-          border-radius: 5px;
-          right: 0;
-          display: inline-block;
+          padding: 6px 20px;
+          background-color: #409EFF; /* 亮蓝色 */
+          color: #fff;
+          border: none;
+          border-radius: 6px;
           font-size: 14px;
+          font-weight: 500;
           cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          display: inline-block;
+        }
 
+        span:hover {
+          background-color: #66b1ff; /* 鼠标悬停颜色 */
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        span:active {
+          transform: scale(0.96); /* 按下时轻微缩小 */
         }
       }
+
     }
 
   }
