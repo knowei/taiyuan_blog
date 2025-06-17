@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "40198724",
+      "name": "搜索",
+      "font_class": "a-rongqi2021x",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    },
+    {
+      "icon_id": "4766685",
+      "name": "home",
+      "font_class": "home",
+      "unicode": "e7c6",
+      "unicode_decimal": 59334
+    },
+    {
+      "icon_id": "5638799",
+      "name": "日期",
+      "font_class": "riqi",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "8474311",
+      "name": "moon",
+      "font_class": "moon",
+      "unicode": "e6c3",
+      "unicode_decimal": 59075
+    },
+    {
+      "icon_id": "4765896",
+      "name": "eye",
+      "font_class": "eye",
+      "unicode": "e78f",
+      "unicode_decimal": 59279
+    },
+    {
+      "icon_id": "4552970",
+      "name": "邮箱",
+      "font_class": "youxiang",
+      "unicode": "e908",
+      "unicode_decimal": 59656
+    },
+    {
       "icon_id": "2462072",
       "name": "ic_user level_1",
       "font_class": "ic_userlevel_",

@@ -17,10 +17,6 @@
             </svg>
           </router-link>
 
-          <!--                    <ol class="two">-->
-          <!--                        <li v-for="(item, index) in categoryList" :key="index" class="two-li"-->
-          <!--                            @click="go(item.id,'cate',item.name)">{{item.name}}</li>-->
-          <!--                    </ol>-->
         </li>
         <li class="one">
           <router-link to="/tag">
@@ -28,10 +24,6 @@
               <use xlink:href="#icon-biaoqian"></use>
             </svg>
           </router-link>
-          <!--                    <ol class="two">-->
-          <!--                        <li class="two-li" v-for="(item, index) in tagList" :key="index" @click="go(item.id,'tag',item.name)">-->
-          <!--                            {{item.name}}</li>-->
-          <!--                    </ol>-->
         </li>
         <li>
           <router-link to="/video">
@@ -54,21 +46,44 @@
             </svg>
           </router-link>
         </li>
+        <li>
+          <a to="" @click="openSearch">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-a-rongqi2021x"></use>
+            </svg>
+          </a>
+        </li>
       </ul>
     </header>
+
+
+    <form class="js-search search-form search-form--modal is-visible" method="get" action="https://2heng.xin"
+          role="search">
+      <div class="search-form__inner">
+        <div>
+          <p class="micro mb-">想要找点什么呢？</p>
+          <i class="iconfont icon-search"></i>
+          <input class="text-input" type="search" name="s" placeholder="Search" required="">
+        </div>
+      </div>
+      <div class="search_close"></div>
+    </form>
+
   </div>
 </template>
 
 <script>
 import "@/assets/js/header"
-import $ from "jquery"
 import {getAllTag} from "@/api/tag"
 import {getAllCategory} from '@/api/category';
+
 export default {
   data() {
     return {
       categoryList: [],
-      tagList: []
+      tagList: [],
+      showSearch: false,
+      searchText: ''
     };
   },
   methods: {
@@ -105,10 +120,13 @@ export default {
         this.tagList = res
       })
     },
+    openSearch() {
+      this.showSearch = true
+    }
   },
   created() {
-    this.getCategory(),
-        this.getTags()
+    this.getCategory()
+    this.getTags()
   }
 }
 </script>

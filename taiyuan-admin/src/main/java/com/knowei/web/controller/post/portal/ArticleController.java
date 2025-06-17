@@ -2,7 +2,6 @@ package com.knowei.web.controller.post.portal;
 
 import com.knowei.common.response.PageResult;
 import com.knowei.common.response.Result;
-import com.knowei.common.utils.ConvertUtils;
 import com.knowei.post.entity.dto.PostPageDto;
 import com.knowei.post.entity.vo.CategoryVo;
 import com.knowei.post.entity.vo.PostVo;
@@ -10,12 +9,11 @@ import com.knowei.post.entity.vo.TagVo;
 import com.knowei.post.service.CategoryService;
 import com.knowei.post.service.PostService;
 import com.knowei.post.service.TagService;
-import com.knowei.web.controller.post.PostController;
-import com.knowei.web.controller.post.TagController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/portal")
@@ -38,7 +36,11 @@ public class ArticleController {
      */
     @PostMapping("/post/page")
     public Result<PageResult<PostVo>> pageResult(@RequestBody PostPageDto dto) {
-        return Result.success(postService.pageResult(dto));
+        PageResult<PostVo> paged = postService.pageResult(dto);
+        List<PostVo> list =
+            paged.getList().stream().filter(item -> "1".equals(item.getStatus())).collect(Collectors.toList());
+        paged.setList(list);
+        return Result.success(paged);
     }
 
     /**
