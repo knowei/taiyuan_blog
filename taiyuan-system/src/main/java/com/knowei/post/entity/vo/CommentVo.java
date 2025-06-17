@@ -1,18 +1,20 @@
-package com.knowei.post.entity.po;
+package com.knowei.post.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.knowei.common.IdModel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 评论表
  *
  * @TableName blog_comment
  */
-@TableName(value = "comment")
 @Data
-public class Comment extends IdModel {
+public class CommentVo {
 
+    private Long id;
     /**
      * 文章ID（关联 blog_post.id）
      */
@@ -68,4 +70,11 @@ public class Comment extends IdModel {
      */
     private Integer likeCount;
 
+    /**
+     * 子评论
+     */
+    private List<CommentVo> children;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 }

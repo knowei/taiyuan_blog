@@ -3,9 +3,8 @@ package com.knowei.post.entity.po;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.knowei.common.IdModel;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * 博客文章表
@@ -14,7 +13,7 @@ import java.util.Date;
  */
 @TableName(value = "post")
 @Data
-public class Post {
+public class Post extends IdModel {
     /**
      * 主键ID
      */
@@ -71,13 +70,4 @@ public class Post {
      */
     private Integer isTop;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 }

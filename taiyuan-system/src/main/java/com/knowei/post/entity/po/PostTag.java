@@ -1,8 +1,7 @@
 package com.knowei.post.entity.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.knowei.common.IdModel;
 import lombok.Data;
 
 /**
@@ -12,10 +11,7 @@ import lombok.Data;
  */
 @TableName(value = "post_tag")
 @Data
-public class PostTag {
-
-    @TableId(type = IdType.AUTO)
-    private Long id;
+public class PostTag extends IdModel {
     /**
      * 文章ID（关联 blog_post.id）
      */

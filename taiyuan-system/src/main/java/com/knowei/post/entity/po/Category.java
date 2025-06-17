@@ -1,11 +1,8 @@
 package com.knowei.post.entity.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.knowei.common.IdModel;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * 文章分类表
@@ -14,12 +11,7 @@ import java.util.Date;
  */
 @TableName(value = "category")
 @Data
-public class Category {
-    /**
-     * 主键ID
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+public class Category extends IdModel {
 
     /**
      * 分类名称
@@ -31,13 +23,4 @@ public class Category {
      */
     private String description;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 }
