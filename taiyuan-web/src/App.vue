@@ -29,7 +29,10 @@ export default {
 </script>
 
 <style>
-
+/* 禁止背景滚动 */
+.no-scroll {
+  overflow: hidden;
+}
 
 .slide-right-enter-active,
 .slide-right-leave-active,

@@ -100,14 +100,14 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import "@/assets/js/comment.js"
 import message from "@/assets/js/message";
 import {getArticle} from "@/api/article"
-import {Comment, GetComment, GetAv} from "@/api/comment"
+import {Comment, GetComment} from "@/api/comment"
 import {marked} from 'marked'
 import Loading from '@/components/loading/loading.vue';
 import "@/assets/js/listLoading"
+
 export default {
   meta: {
     index: 7
@@ -203,6 +203,11 @@ export default {
   created() {
     this.getArticle()
     this.getAllComment()
+  },
+  watch: {
+    '$route.params.id'(newId) {
+      this.getArticle()
+    }
   }
 }
 </script>

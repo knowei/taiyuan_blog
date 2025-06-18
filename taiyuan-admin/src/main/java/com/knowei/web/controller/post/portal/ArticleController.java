@@ -40,6 +40,7 @@ public class ArticleController {
         List<PostVo> list =
             paged.getList().stream().filter(item -> "1".equals(item.getStatus())).collect(Collectors.toList());
         paged.setList(list);
+        paged.setTotal((long)list.size());
         return Result.success(paged);
     }
 
