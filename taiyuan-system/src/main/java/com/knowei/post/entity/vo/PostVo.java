@@ -74,6 +74,11 @@ public class PostVo {
     private Integer isTop;
 
     /**
+     * 评论数
+     */
+    private Integer commentCount;
+
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

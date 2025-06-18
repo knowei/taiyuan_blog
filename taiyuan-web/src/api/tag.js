@@ -11,7 +11,7 @@ export function getAllTag() {
 // 获取id下的文章
 export function getArticlesById(id) {
     return service({
-        method: 'post',
+        method: 'get',
         url: `/portal/tag/${id}`
     })
 }

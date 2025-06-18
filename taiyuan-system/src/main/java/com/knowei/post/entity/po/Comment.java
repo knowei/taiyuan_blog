@@ -54,6 +54,11 @@ public class Comment extends IdModel {
     private String browserName;
 
     /**
+     * 操作系统名称
+     */
+    private String osName;
+
+    /**
      * 评论内容
      */
     private String content;

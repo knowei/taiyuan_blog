@@ -16,11 +16,11 @@
     <div class="archive-content">
       <div class="article-sort" v-for="(item, index) in archive" :key="index">
         <div class="article-sort-item year"><span>{{ item.year }}</span></div>
-        <div class="article-sort-item no-article-cover" v-for="(it, ind) in item.articleList" :key="ind">
+        <div class="article-sort-item no-article-cover" v-for="(it, ind) in item.postList" :key="ind">
           <div class="article-sort-item-info">
             <div class="article-sort-item-time my-time">{{ it.createTime }}</div>
             <router-link class="article-sort-item-title" :to="{name: 'article', params:{id: it.id}}">
-              {{ it.articleTitle }}
+              {{ it.title }}
             </router-link>
           </div>
         </div>
@@ -31,6 +31,7 @@
 
 <script>
 import {archive} from "@/api/archive"
+
 export default {
   meta: {
     index: 4
@@ -43,10 +44,7 @@ export default {
   methods: {
     getArchive() {
       archive().then(res => {
-        console.log(res.data)
-        if (res.data.code === 200) {
-          this.archive = res.data.data
-        }
+        this.archive = res
       })
     }
   },
@@ -81,6 +79,7 @@ export default {
   // background: #676767;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 20px;
 
   .article-sort {
     margin: 0 100px;
@@ -98,7 +97,7 @@ export default {
     display: -moz-box;
     display: -webkit-flex;
     display: -ms-flexbox;
-    display: box;
+    //display: box;
     display: flex;
     -webkit-box-align: center;
     -moz-box-align: center;
@@ -149,7 +148,7 @@ export default {
 
       font-size: 17px;
       font-weight: 500;
-      
+
     }
     transition: all 0.7s ease-in-out;
   }

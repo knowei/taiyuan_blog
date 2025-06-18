@@ -56,6 +56,11 @@ public class CommentVo {
     private String browserName;
 
     /**
+     * os
+     */
+    private String osName;
+
+    /**
      * 评论内容
      */
     private String content;

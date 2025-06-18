@@ -4,6 +4,6 @@ import service from "@/plugin/service";
 export function archive() {
     return service({
         method: 'get',
-        url: '/archive'
+        url: '/portal/archive'
     })
 }

@@ -57,14 +57,22 @@
             </div>
             <!-- <div class="friend-title"> -->
             <div class="friend-info">
-              <div class="friend-nickname">{{ item.nickName }}
-                <svg class="icon" aria-hidden="true">
-                  <use
-                      :xlink:href="item.nickName == 'K-No-Wei' ? '#icon-ic_userlevel_5': '#icon-ic_userlevel_4'">
-                  </use>
-                </svg>
-                <span style="cursor: pointer;color:#1a416b;font-weight: 600;"
-                      @click="showDetails(item.id, index)">回复</span></div>
+              <div class="friend-nickname">
+                <div>
+                  {{ item.nickName }}
+                  <svg class="icon" aria-hidden="true">
+                    <use
+                        :xlink:href="item.nickName == 'K-No-Wei' ? '#icon-ic_userlevel_5': '#icon-ic_userlevel_4'">
+                    </use>
+                  </svg>
+                  <span style="cursor: pointer;color:#1a416b;font-weight: 600;"
+                        @click="showDetails(item.id, index)">回复</span>
+                </div>
+                <div>
+                  <span>{{ item.browserName }}</span>
+                  <span> {{ item.osName }}</span>
+                </div>
+              </div>
               <div class="friend-time">{{ item.createTime }}</div>
               <!-- 评论内容 -->
               <div class="friend-msg">{{ item.content }}</div>
@@ -76,11 +84,19 @@
                   </div>
                   <!-- <div class="friend-title"> -->
                   <div class="friend-child">
-                    <div class="friend-nickname">{{ it.nickName }}
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-ic_userlevel_5"></use>
-                      </svg>
-                      <span style="cursor: pointer;"></span></div>
+                    <div class="friend-nickname">
+                      <div>
+                        {{ it.nickName }}
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-ic_userlevel_5"></use>
+                        </svg>
+                        <span style="cursor: pointer;"></span>
+                      </div>
+                      <div>
+                        <span>{{ it.browserName }}</span>
+                        <span> {{ it.osName }}</span>
+                      </div>
+                    </div>
 
                     <div class="friend-time">{{ it.createTime }}</div>
                     <!-- 评论内容 -->
@@ -525,7 +541,8 @@ export default {
       line-height: 1.5;
       font-weight: 500;
       color: #344951;
-
+      display: flex !important;
+      justify-content: space-between;
       a {
         text-decoration: none;
         color: rgb(16, 130, 168);

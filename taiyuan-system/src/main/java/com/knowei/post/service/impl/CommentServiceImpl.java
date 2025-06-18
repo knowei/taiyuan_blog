@@ -11,7 +11,9 @@ import com.knowei.post.entity.vo.CommentVo;
 import com.knowei.post.mapper.CommentMapper;
 import com.knowei.post.service.CommentService;
 import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ import java.util.*;
  * @createDate 2025-05-23 17:02:10
  */
 @Service
+@Slf4j
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
 
     @Override
@@ -80,9 +83,15 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public Boolean addComment(CommentAddDto commentAddDto, HttpServletRequest request) {
         String ipAddr = IpUtils.getIpAddr();
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+        //获取操作系统对象
+        OperatingSystem operatingSystem = userAgent.getOperatingSystem();
+        String name = operatingSystem.getName();
+
+        //获取浏览器对象
         Browser browser = userAgent.getBrowser();
         //当前浏览器名称
         String browserName = browser.getName();
+
         String image = "https://api.dicebear.com/6.x/bottts/png?seed=" + commentAddDto.getNickName();
 
         Comment comment = new Comment();
@@ -91,6 +100,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         comment.setIp(ipAddr);
         comment.setBrowserName(browserName);
         comment.setAuthorImg(image);
+        comment.setOsName(name);
 
         return this.save(comment);
     }

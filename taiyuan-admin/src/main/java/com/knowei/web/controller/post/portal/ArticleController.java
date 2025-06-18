@@ -3,6 +3,7 @@ package com.knowei.web.controller.post.portal;
 import com.knowei.common.response.PageResult;
 import com.knowei.common.response.Result;
 import com.knowei.post.entity.dto.PostPageDto;
+import com.knowei.post.entity.vo.ArchiveVo;
 import com.knowei.post.entity.vo.CategoryVo;
 import com.knowei.post.entity.vo.PostVo;
 import com.knowei.post.entity.vo.TagVo;
@@ -60,9 +61,36 @@ public class ArticleController {
         return Result.success(categoryService.listCategory());
     }
 
+    /**
+     * 根据分类id查询所属的文章
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/category/{id}")
+    public Result<List<PostVo>> getCategoryById(@PathVariable Long id) {
+        return Result.success(postService.getCategoryById(id));
+    }
+
     @GetMapping("/tag/list")
     public Result<List<TagVo>> listTag() {
         return Result.success(tagService.listTag());
+    }
+
+    /**
+     * 根据分类id获取文章
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/tag/{id}")
+    public Result<List<PostVo>> getTagById(@PathVariable Long id) {
+        return Result.success(postService.getTagById(id));
+    }
+
+    @GetMapping("/archive")
+    public Result<List<ArchiveVo>> archive() {
+        return Result.success(postService.archive());
     }
 
 }

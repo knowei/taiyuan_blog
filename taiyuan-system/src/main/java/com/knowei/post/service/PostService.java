@@ -5,7 +5,10 @@ import com.knowei.common.response.PageResult;
 import com.knowei.post.entity.dto.PostAddDto;
 import com.knowei.post.entity.dto.PostPageDto;
 import com.knowei.post.entity.po.Post;
+import com.knowei.post.entity.vo.ArchiveVo;
 import com.knowei.post.entity.vo.PostVo;
+
+import java.util.List;
 
 /**
  * @author zheng
@@ -25,4 +28,15 @@ public interface PostService extends IService<Post> {
     Boolean saveOrUpdate(PostAddDto postAddDto);
 
     PostVo getPostVo(Long postId);
+
+    /**
+     * 归档
+     *
+     * @return
+     */
+    List<ArchiveVo> archive();
+
+    List<PostVo> getCategoryById(Long id);
+
+    List<PostVo> getTagById(Long id);
 }

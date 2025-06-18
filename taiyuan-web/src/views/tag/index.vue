@@ -1,6 +1,11 @@
 <template>
   <div class="tag" style="margin-bottom: 200px;">
     <div class="index-content" flex="auto" @scroll=handleScrollScroll()>
+
+      <div class="category-list">
+        <div class="category-item" v-for="(item, index) in tagList" @click="getPost(item.id)"> {{ item.name }}</div>
+      </div>
+
       <div style="font-size: 16px; font-weight: 700;letter-spacing: 1px;margin-bottom: 10px;">文章</div>
       <hr style="margin-bottom: 20px;">
 
@@ -18,7 +23,7 @@
               <div class="article-title">
                 <router-link to="/view">
                   <router-link :to="{name: 'article', params:{id: item.id}}">
-                    <h1>{{ item.articleTitle }}</h1>
+                    <h1>{{ item.title }}</h1>
                   </router-link>
                 </router-link>
               </div>
@@ -28,23 +33,23 @@
                   <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-31pinglun"></use>
                   </svg>
-                  {{ item.count }} 评论
+                  {{ item.commentCount }} 评论
                 </div>
                 <div>
                   <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-wenjianjia"></use>
                   </svg>
-                  {{ item.category.categoryName }}
+                  {{ getCategoryName(item.categoryId) }}
                 </div>
               </div>
               <div class="article-des">
-                {{ item.articleDescribe }}
+                {{ item.summary }}
               </div>
             </div>
             <div class="article-item-right" :class="{arleft: index % 2 == 0}">
               <router-link :to="{name: 'article', params:{id: item.id}}"><img class="article-img"
                                                                               :class="{arright: index % 2 == 0}"
-                                                                              :src="item.articleCover"/>
+                                                                              :src="item.coverImage	"/>
               </router-link>
             </div>
           </div>
@@ -55,14 +60,13 @@
 </template>
 
 <script>
-import $ from "jquery"
 import Header from '@/components/Header.vue';
 import Profile from '@/components/Profile.vue';
 //鼠标样式
 import "@/assets/js/shubiao"
-import {getAtricleList} from "@/api/article"
-import {getArticlesById} from "@/api/tag"
+import {getAllTag, getArticlesById} from "@/api/tag"
 import Loading from "@/components/loading/loading.vue";
+import {getAllCategory} from "@/api/category";
 
 export default {
   meta: {
@@ -80,8 +84,8 @@ export default {
       pageSize: '',
       total: '',
       articleList: [],
-      categoryName: ''
-
+      tagList: '',
+      categoryList: ''
     }
   },
   methods: {
@@ -97,21 +101,23 @@ export default {
         })
       }
     },
-    // 获取全部文章
-    getAll() {
-      getArticlesById(this.$route.params.id).then(res => {
-        if (res.data.code === 200) {
-          this.articleList = res.data.data
-          for (let i = 0; i < this.articleList[0].tags.length; i++) {
-            if (this.articleList[0].tags[i].tagName == this.tagName) {
-              this.total = this.articleList[0].tags[i].count
-              break;
-            }
-          }
-
-        }
+    getTag() {
+      getAllTag().then(res => {
+        this.tagList = res
+      })
+      getAllCategory().then(res => {
+        this.categoryList = res
       })
     },
+    getPost(id) {
+      getArticlesById(id).then(res => {
+        this.articleList = res
+      })
+    },
+    getCategoryName(id) {
+      const category = this.categoryList.find(item => item.id == id);
+      return category ? category.name : '未知分类';
+    }
   },
   mounted() {
     //监听滚动条增加动画
@@ -119,8 +125,7 @@ export default {
 
   },
   created() {
-    this.tagName = this.$route.params.title
-    this.getAll()
+    this.getTag()
   },
   watch: {
     '$route'(to, from) {
@@ -134,6 +139,21 @@ export default {
 
 <style lang="less" scoped>
 @import url("@/assets/scss/lbtu.scss");
+
+.category-list {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+
+  .category-item {
+    border: 1px solid #5cc8e4;
+    display: inline-block;
+    padding: 10px;
+    margin-right: 40px;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+}
 
 .arright {
   border-bottom-right-radius: 0px !important;

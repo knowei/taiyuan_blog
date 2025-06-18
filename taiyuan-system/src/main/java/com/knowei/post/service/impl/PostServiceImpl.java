@@ -1,28 +1,32 @@
 package com.knowei.post.service.impl;
 
+import com.alibaba.fastjson2.util.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.knowei.common.GlobalException;
 import com.knowei.common.response.PageResult;
+import com.knowei.common.utils.ConvertUtils;
 import com.knowei.common.utils.StringUtils;
 import com.knowei.post.entity.dto.PostAddDto;
 import com.knowei.post.entity.dto.PostPageDto;
+import com.knowei.post.entity.po.Comment;
 import com.knowei.post.entity.po.Post;
 import com.knowei.post.entity.po.PostTag;
 import com.knowei.post.entity.po.Tag;
+import com.knowei.post.entity.vo.ArchiveVo;
 import com.knowei.post.entity.vo.PostVo;
 import com.knowei.post.mapper.PostMapper;
-import com.knowei.post.service.CategoryService;
-import com.knowei.post.service.PostService;
-import com.knowei.post.service.PostTagService;
-import com.knowei.post.service.TagService;
+import com.knowei.post.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -31,6 +35,7 @@ import java.util.stream.Collectors;
  * @createDate 2025-05-23 17:02:10
  */
 @Service
+@Slf4j
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements PostService {
 
     @Autowired
@@ -41,7 +46,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
     @Autowired
     private TagService tagService;
-    ;
+
+    @Autowired
+    private CommentService commentService;
 
     /**
      * 分页查询
@@ -78,6 +85,10 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 return tag.getId();
             }).collect(Collectors.toList());
             vo.setTagIds(tagIds);
+            LambdaQueryWrapper<Comment> comqw = new LambdaQueryWrapper<>();
+            comqw.eq(Comment::getPostId, id);
+            long count = commentService.count(comqw);
+            vo.setCommentCount(Math.toIntExact(count));
             list.add(vo);
         });
 
@@ -144,6 +155,73 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         }).collect(Collectors.toList());
         postVo.setTagIds(tagIds);
         return postVo;
+    }
+
+    /**
+     * 归档
+     *
+     * @return
+     */
+    @Override
+    public List<ArchiveVo> archive() {
+        List<Post> list = this.list(
+            new LambdaQueryWrapper<Post>().select(Post::getId, Post::getCreateTime, Post::getTitle)
+                .eq(Post::getStatus, "1"));
+        Map<Date, List<Post>> map = list.stream().collect(Collectors.groupingBy(Post::getCreateTime));
+        log.info("map:{}", map);
+
+        List<ArchiveVo> archiveVos = new ArrayList<>();
+        for (Map.Entry<Date, List<Post>> entry : map.entrySet()) {
+            ArchiveVo archiveVo = new ArchiveVo();
+            archiveVo.setYear(DateUtils.format(entry.getKey(), "yyyy"));
+            archiveVo.setPostList(ConvertUtils.convertList(entry.getValue(), PostVo.class));
+            archiveVos.add(archiveVo);
+        }
+        return archiveVos;
+    }
+
+    /**
+     * 根据分类id查询
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<PostVo> getCategoryById(Long id) {
+        LambdaQueryWrapper<Post> qw = new LambdaQueryWrapper<Post>();
+        qw.eq(Post::getCategoryId, id);
+        qw.eq(Post::getStatus, "1");
+        List<Post> list = this.list(qw);
+
+        List<PostVo> postVos = ConvertUtils.convertList(list, PostVo.class);
+        postVos.forEach(item -> {
+            LambdaQueryWrapper<Comment> comqw = new LambdaQueryWrapper<>();
+            comqw.eq(Comment::getPostId, item.getId());
+            long count = commentService.count(comqw);
+            item.setCommentCount(Math.toIntExact(count));
+        });
+
+        return postVos;
+    }
+
+    @Override
+    public List<PostVo> getTagById(Long id) {
+        List<PostTag> postTagList = postTagService.list(new LambdaQueryWrapper<PostTag>().eq(PostTag::getTagId, id));
+        List<Long> postId = postTagList.stream().map(PostTag::getPostId).collect(Collectors.toList());
+
+        List<Post> posts = this.listByIds(postId);
+        List<Post> resultPost =
+            posts.stream().filter(item -> "1".equals(item.getStatus())).collect(Collectors.toList());
+
+        List<PostVo> postVos = ConvertUtils.convertList(resultPost, PostVo.class);
+        postVos.forEach(item -> {
+            LambdaQueryWrapper<Comment> comqw = new LambdaQueryWrapper<>();
+            comqw.eq(Comment::getPostId, item.getId());
+            long count = commentService.count(comqw);
+            item.setCommentCount(Math.toIntExact(count));
+        });
+
+        return postVos;
     }
 
 }
