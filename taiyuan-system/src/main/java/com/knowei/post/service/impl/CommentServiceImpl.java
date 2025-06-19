@@ -41,7 +41,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         // 然后遍历所有的parent_id!=0的，判断parent_id是不是在map中，放入List之中，然后根据评论的时间
         //排序
 
-        List<Comment> topLevelComment = new ArrayList<Comment>();
+        List<Comment> topLevelComment = new ArrayList<>();
         Map<Long, List<Comment>> childrenMap = new HashMap<>();
         List<CommentVo> result = new ArrayList<>();
 
@@ -58,6 +58,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             }
         }
 
+        // 将子评论设置到children
         for (Comment comment : topLevelComment) {
             CommentVo commentVo = ConvertUtils.convertVO(comment, CommentVo.class);
             List<Comment> comments = childrenMap.get(commentVo.getId());

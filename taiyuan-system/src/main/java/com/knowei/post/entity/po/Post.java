@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.knowei.common.IdModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 博客文章表
  *
  * @TableName blog_post
  */
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "post")
 @Data
 public class Post extends IdModel {

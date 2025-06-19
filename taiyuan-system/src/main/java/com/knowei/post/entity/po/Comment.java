@@ -3,12 +3,14 @@ package com.knowei.post.entity.po;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.knowei.common.IdModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 评论表
  *
  * @TableName blog_comment
  */
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "comment")
 @Data
 public class Comment extends IdModel {
