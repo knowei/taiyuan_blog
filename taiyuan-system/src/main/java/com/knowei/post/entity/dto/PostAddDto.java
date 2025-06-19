@@ -27,6 +27,31 @@ public class PostAddDto {
     private String summary;
 
     /**
+     * 封面图片
+     */
+    private String coverImage;
+
+    /**
+     * 是否资源
+     */
+    private String isUrl;
+
+    /**
+     * 资源链接
+     */
+    private String url;
+
+    /**
+     * 提取密码
+     */
+    private String openPassword;
+
+    /**
+     * 解压密码
+     */
+    private String decompressionPassword;
+
+    /**
      * 内容
      */
     private String content;

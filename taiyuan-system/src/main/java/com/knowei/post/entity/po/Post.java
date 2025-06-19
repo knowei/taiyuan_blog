@@ -70,4 +70,8 @@ public class Post extends IdModel {
      */
     private Integer isTop;
 
+    /**
+     * 是否为资源贴（0否，1是）
+     */
+    private String isResource;
 }

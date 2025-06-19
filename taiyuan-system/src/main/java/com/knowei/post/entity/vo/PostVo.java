@@ -78,6 +78,14 @@ public class PostVo {
      */
     private Integer commentCount;
 
+    private String isUrl;
+
+    private String url;
+
+    private String openPassword;
+
+    private String decompressionPassword;
+
     /**
      * 创建时间
      */

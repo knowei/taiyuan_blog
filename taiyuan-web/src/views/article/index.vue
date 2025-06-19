@@ -26,6 +26,27 @@
       <hr>
       <div v-highlight class="view-arti " id="knowei-mark" v-html="content">
       </div>
+
+
+      <div class="view-url-div">链接</div>
+      <div class="view-url" v-if="article.isUrl">
+        <div>
+          <div class="view-url-div">
+            <span v-if="article.openPassword != null"> 提取码:{{ article.openPassword }}</span>
+            <span v-if="article.decompressionPassword != null">解压码:{{ article.decompressionPassword }}</span>
+          </div>
+        </div>
+
+        <div style="display: flex">
+          <div class="view-url-btn1" @click="copyUrl">
+            复制
+          </div>
+          <div class="view-url-btn2" @click="toUrl">
+            跳转
+          </div>
+        </div>
+
+      </div>
       <hr/>
     </div>
 
@@ -214,7 +235,60 @@ export default {
       this.commentParams.parentId = id
       this.commentParams.content = '@' + this.articleComment[textid].nickName + " "
       console.log(this.commentParams)
+    },
+    toUrl() {
+      const openPassword = this.article.openPassword
+      const url = this.article.url
+
+      if (!openPassword) {
+        this.$message.warning('提取码为空')
+        return
+      }
+
+      if (!url) {
+        this.$message.warning('未提供跳转链接')
+        return
+      }
+
+      this.copyToClipboard(openPassword)
+          .then(() => {
+            this.$message.success('提取码已复制到剪贴板，即将跳转...')
+            // 延迟 1.2 秒后跳转
+            setTimeout(() => {
+              window.open(url, '_blank')
+            }, 1200)
+          })
+          .catch(() => {
+            this.$message.warning('复制提取码失败')
+          })
+    },
+    copyUrl() {
+      this.copyToClipboard(this.article.url)
+          .then(() => {
+            this.$message.success('链接已复制到剪贴板')
+          })
+          .catch(() => {
+            this.$message.warning('复制链接失败')
+          })
+    },
+    copyToClipboard(text) {
+      if (navigator.clipboard) {
+        return navigator.clipboard.writeText(text)
+      } else {
+        return new Promise((resolve, reject) => {
+          const textarea = document.createElement('textarea')
+          textarea.value = text
+          textarea.style.position = 'fixed' // 防止页面抖动
+          textarea.style.opacity = '0'
+          document.body.appendChild(textarea)
+          textarea.select()
+          const success = document.execCommand('copy')
+          document.body.removeChild(textarea)
+          success ? resolve() : reject()
+        })
+      }
     }
+
   },
   created() {
     this.getArticle()
@@ -349,7 +423,7 @@ export default {
   background: rgba(255, 255, 255, 0.443);
   padding-top: 50px;
   position: relative;
-  max-width: 70%;
+  max-width: 73%;
   margin-left: auto;
   margin-right: auto;
   animation: header-menu 1.8s;
@@ -359,11 +433,67 @@ export default {
 
   hr {
     margin: 10px auto 0;
-    width: 96%;
+    width: 100%;
     border: 1px dashed #ececec;
   }
 
   .view-arti {
+  }
+
+  .view-url-div {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #666;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .view-url-div::before,
+  .view-url-div::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+    margin: 0 12px;
+  }
+
+  .view-url {
+    border: 1px solid #ececec;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 10px;
+    padding: 20px 20px;
+    font-size: 23px;
+
+    .view-url-div {
+      padding: 10px;
+    }
+
+    .view-url-btn1 {
+      cursor: pointer;
+      background-color: #05ea5e; /* 亮蓝色 */
+      color: #fff;
+      border-radius: 50px;
+      padding: 10px;
+      margin-right: 10px;
+    }
+
+    .view-url-btn1:active {
+      transform: scale(0.93);
+    }
+
+    .view-url-btn2 {
+      cursor: pointer;
+      background-color: #409EFF; /* 亮蓝色 */
+      color: #fff;
+      border-radius: 50px;
+      padding: 10px;
+    }
+
+    .view-url-btn2:active {
+      transform: scale(0.93);
+    }
   }
 }
 

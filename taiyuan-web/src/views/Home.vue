@@ -67,7 +67,7 @@
       </div>
     </section>
 
-    <meting-js server="netease" type="playlist" id="7637776489" fixed="true" autoplay="false" loop="all" order="list"
+    <meting-js server="netease" type="playlist" id="809376678" fixed="true" autoplay="false" loop="all" order="list"
                preload="auto" list-folded="true" list-max-height="500px" lrc-type="1">
     </meting-js>
 
@@ -80,7 +80,6 @@
 </template>
 
 <script>
-import $ from "jquery"
 import Header from '@/components/Header.vue';
 import Profile from '@/components/Profile.vue';
 //鼠标样式

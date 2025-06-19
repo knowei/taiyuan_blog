@@ -10,10 +10,7 @@ import com.knowei.common.utils.ConvertUtils;
 import com.knowei.common.utils.StringUtils;
 import com.knowei.post.entity.dto.PostAddDto;
 import com.knowei.post.entity.dto.PostPageDto;
-import com.knowei.post.entity.po.Comment;
-import com.knowei.post.entity.po.Post;
-import com.knowei.post.entity.po.PostTag;
-import com.knowei.post.entity.po.Tag;
+import com.knowei.post.entity.po.*;
 import com.knowei.post.entity.vo.ArchiveVo;
 import com.knowei.post.entity.vo.PostVo;
 import com.knowei.post.mapper.PostMapper;
@@ -49,6 +46,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private PostResourceService postResourceService;
 
     /**
      * 分页查询
@@ -101,6 +101,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         if (postAddDto.getId() == null) {
             // 保存
             BeanUtils.copyProperties(postAddDto, blogPost);
+            blogPost.setIsResource(postAddDto.getIsUrl());
             boolean save = this.save(blogPost);
             if (!save) {
                 throw new GlobalException("保存失败");
@@ -114,10 +115,18 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 postTag.setTagId(tagId);
                 postTagService.save(postTag);
             }
+
+            PostResource resource = new PostResource();
+            BeanUtils.copyProperties(postAddDto, resource);
+            resource.setPostId(postId);
+            resource.setId(null);
+            postResourceService.save(resource);
+
             return true;
         } else {
             //更新
             BeanUtils.copyProperties(postAddDto, blogPost);
+            blogPost.setIsResource(postAddDto.getIsUrl());
             Long postId = blogPost.getId();
 
             postTagService.remove(new LambdaQueryWrapper<PostTag>().eq(PostTag::getPostId, postId));
@@ -128,6 +137,17 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 postTag.setTagId(tagId);
                 postTagService.save(postTag);
             }
+            if ("1".equals(postAddDto.getIsUrl())) {
+                PostResource postResource = postResourceService.getOne(
+                    new LambdaQueryWrapper<PostResource>().eq(PostResource::getPostId, postId));
+
+                postResource.setUrl(postAddDto.getUrl());
+                postResource.setOpenPassword(postAddDto.getOpenPassword());
+                postResource.setDecompressionPassword(postAddDto.getDecompressionPassword());
+
+                postResourceService.updateById(postResource);
+            }
+
             return this.updateById(blogPost);
         }
     }
@@ -154,6 +174,19 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             return tag.getId();
         }).collect(Collectors.toList());
         postVo.setTagIds(tagIds);
+
+        PostResource postResource =
+            postResourceService.getOne(new LambdaQueryWrapper<PostResource>().eq(PostResource::getPostId, id));
+
+        if (postResource != null) {
+            postVo.setUrl(postResource.getUrl());
+            postVo.setOpenPassword(postResource.getOpenPassword());
+            postVo.setDecompressionPassword(postResource.getDecompressionPassword());
+            postVo.setIsUrl("1");
+        } else {
+            postVo.setIsUrl("0");
+        }
+
         return postVo;
     }
 
