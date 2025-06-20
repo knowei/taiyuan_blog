@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import {getCategory, pageCategory, saveOrUpdateCategory} from "@/api/post/category"
+import {deleteCategory, getCategory, pageCategory, saveOrUpdateCategory} from "@/api/post/category"
 
 export default {
   name: "Post",
@@ -227,9 +227,10 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
+      console.log(row)
       const postIds = row.id || this.ids
-      this.$modal.confirm('是否确认删除标签编号为"' + postIds + '"的数据项？').then(function () {
-        return deleteTag(postIds)
+      this.$modal.confirm('是否确认删除分类编号为"' + postIds + '"的数据项？').then(function () {
+        return deleteCategory(postIds)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess("删除成功")
