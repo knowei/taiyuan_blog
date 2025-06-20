@@ -12,7 +12,6 @@ import com.knowei.common.utils.SecurityUtils;
 import com.knowei.common.utils.StringUtils;
 import com.knowei.common.utils.poi.ExcelUtil;
 import com.knowei.system.service.ISysDeptService;
-import com.knowei.system.service.ISysPostService;
 import com.knowei.system.service.ISysRoleService;
 import com.knowei.system.service.ISysUserService;
 import org.apache.commons.lang3.ArrayUtils;
@@ -42,9 +41,6 @@ public class SysUserController extends BaseController {
 
     @Autowired
     private ISysDeptService deptService;
-
-    @Autowired
-    private ISysPostService postService;
 
     /**
      * 获取用户列表
@@ -94,13 +90,11 @@ public class SysUserController extends BaseController {
             userService.checkUserDataScope(userId);
             SysUser sysUser = userService.selectUserById(userId);
             ajax.put(AjaxResult.DATA_TAG, sysUser);
-            ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
         }
         List<SysRole> roles = roleService.selectRoleAll();
         ajax.put("roles",
             SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
-        ajax.put("posts", postService.selectPostAll());
         return ajax;
     }
 
