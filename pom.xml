@@ -196,20 +196,6 @@
                 <version>${kaptcha.version}</version>
             </dependency>
 
-            <!-- 定时任务-->
-            <dependency>
-                <groupId>com.knowei</groupId>
-                <artifactId>taiyuan-quartz</artifactId>
-                <version>${knowei.version}</version>
-            </dependency>
-
-            <!-- 代码生成-->
-            <dependency>
-                <groupId>com.knowei</groupId>
-                <artifactId>taiyuan-generator</artifactId>
-                <version>${knowei.version}</version>
-            </dependency>
-
             <!-- 核心模块-->
             <dependency>
                 <groupId>com.knowei</groupId>
@@ -238,8 +224,6 @@
         <module>taiyuan-admin</module>
         <module>taiyuan-framework</module>
         <module>taiyuan-system</module>
-        <module>taiyuan-quartz</module>
-        <module>taiyuan-generator</module>
         <module>taiyuan-common</module>
     </modules>
     <packaging>pom</packaging>

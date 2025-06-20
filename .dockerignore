@@ -1,0 +1,17 @@
+# 忽略前端模块
+taiyuan-web/
+taiyuan-front/
+
+# 忽略已有的 target 目录（包括子模块）
+**/target/
+
+# 可选：忽略 IDE 自动生成文件
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+*.log
+
+# 忽略版本控制文件
+.git/

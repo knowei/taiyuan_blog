@@ -49,17 +49,6 @@
             <artifactId>taiyuan-framework</artifactId>
         </dependency>
 
-        <!-- 定时任务-->
-        <dependency>
-            <groupId>com.knowei</groupId>
-            <artifactId>taiyuan-quartz</artifactId>
-        </dependency>
-
-        <!-- 代码生成-->
-        <dependency>
-            <groupId>com.knowei</groupId>
-            <artifactId>taiyuan-generator</artifactId>
-        </dependency>
 
     </dependencies>
 

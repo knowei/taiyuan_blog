@@ -18,6 +18,7 @@ module.exports = defineConfig({
         },
       },
     },
+    allowedHosts: 'all',
   },
   configureWebpack: (config) => {
     if (isProduction) {
