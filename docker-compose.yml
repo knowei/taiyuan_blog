@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: taiyuan-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: "taiyuan_blog"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+  redis:
+    image: redis:5.0.14.1
+    container_name: taiyuan-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  taiyuan-admin:
+    build:
+      context: ./taiyuan-admin
+      dockerfile: Dockerfile
+    container_name: taiyuan-admin
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/taiyuan_blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "123456"
+      SPRING_REDIS_HOST: "redis"
+    restart: unless-stopped
+
+  taiyuan-front:
+    build:
+      context: ./taiyuan-front
+      dockerfile: Dockerfile
+    container_name: taiyuan-front
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  taiyuan-web:
+    build:
+      context: ./taiyuan-web
+      dockerfile: Dockerfile
+    container_name: taiyuan-web
+    ports:
+      - "8088:8088"
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  redis_data:
