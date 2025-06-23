@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,6 +97,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     }
 
     @Override
+    @Transactional
     public Boolean saveOrUpdate(PostAddDto postAddDto) {
         Post blogPost = new Post();
         if (postAddDto.getId() == null) {
@@ -116,11 +118,13 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 postTagService.save(postTag);
             }
 
-            PostResource resource = new PostResource();
-            BeanUtils.copyProperties(postAddDto, resource);
-            resource.setPostId(postId);
-            resource.setId(null);
-            postResourceService.save(resource);
+            if ("1".equals(postAddDto.getIsUrl())) {
+                PostResource resource = new PostResource();
+                BeanUtils.copyProperties(postAddDto, resource);
+                resource.setPostId(postId);
+                resource.setId(null);
+                postResourceService.save(resource);
+            }
 
             return true;
         } else {

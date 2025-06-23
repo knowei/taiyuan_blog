@@ -36,10 +36,7 @@ services:
       - mysql
       - redis
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/taiyuan_blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai"
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "123456"
-      SPRING_REDIS_HOST: "redis"
+      SPRING_PROFILES_ACTIVE: "prod"
     restart: unless-stopped
 
   taiyuan-front:
