@@ -38,6 +38,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      bannerUrl: 'https://tvax1.sinaimg.cn/large/006MWoJqgy1h299wqkpalj31e010s1ip.jpg'
+    }
+  },
   methods: {
     goDown() {
       console.log(document.documentElement.clientHeight)
@@ -129,7 +134,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: url(https://tvax1.sinaimg.cn/large/006MWoJqgy1h299wqkpalj31e010s1ip.jpg);
+  background: url(https://t.alcy.cc/fj);
   background-size: cover;
 }
 

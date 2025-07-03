@@ -9,7 +9,8 @@ const CompressionPlugin = require('compression-webpack-plugin')
 
 const name = process.env.VUE_APP_TITLE || '太原管理系统' // 网页标题
 
-const baseUrl = 'http://localhost:8080' // 后端接口
+// const baseUrl = 'http://localhost:8080' // 后端接口
+const baseUrl = process.env.VUE_APP_API || 'http://taiyuan-admin:8080'; // 修改为服务名
 
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
 
