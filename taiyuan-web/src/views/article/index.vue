@@ -22,14 +22,14 @@
       <div v-html="point" id="point"></div>
     </div>
 
-    <div class="view-content ">
+    <div class="view-content " v-if="article.isUrl === '1'">
       <hr>
       <div v-highlight class="view-arti " id="knowei-mark" v-html="content">
       </div>
 
 
       <div class="view-url-div">链接</div>
-      <div class="view-url" v-if="article.isUrl">
+      <div class="view-url">
         <div>
           <div class="view-url-div">
             <span v-if="article.openPassword != null"> 提取码:{{ article.openPassword }}</span>
@@ -463,7 +463,7 @@ export default {
     display: flex;
     justify-content: space-between;
     margin: 20px 10px;
-    padding: 20px 20px;
+    padding: 10px 7px;
     font-size: 23px;
 
     .view-url-div {

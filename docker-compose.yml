@@ -15,6 +15,8 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
+    networks:
+      - taiyuan-network
 
   redis:
     image: redis:5.0
@@ -24,6 +26,8 @@ services:
     volumes:
       - redis_data:/data
     restart: unless-stopped
+    networks:
+      - taiyuan-network
 
   taiyuan-admin:
     build:
@@ -36,11 +40,10 @@ services:
       - mysql
       - redis
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/taiyuan_blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai"
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "123456"
-      SPRING_REDIS_HOST: "redis"
+      SPRING_PROFILES_ACTIVE: "prod"
     restart: unless-stopped
+    networks:
+      - taiyuan-network
 
   taiyuan-front:
     build:
@@ -50,6 +53,11 @@ services:
     ports:
       - "80:80"
     restart: unless-stopped
+    depends_on:
+      - taiyuan-admin
+    networks:
+      - taiyuan-network
+
 
   taiyuan-web:
     build:
@@ -59,7 +67,17 @@ services:
     ports:
       - "8088:8088"
     restart: unless-stopped
+    depends_on:
+      - taiyuan-admin
+    environment:
+      VUE_APP_API: "http://taiyuan-admin:8080" # 动态注入 API 地址
+    networks:
+      - taiyuan-network
 
 volumes:
   mysql_data:
   redis_data:
+
+networks:
+  taiyuan-network:
+    driver: bridge
